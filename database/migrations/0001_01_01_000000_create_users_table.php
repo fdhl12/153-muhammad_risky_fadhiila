@@ -13,12 +13,39 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('username')->unique();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('photo_profile');
+            $table->enum('role', ['admin', 'user'])->default('user');
             $table->timestamps();
+        });
+
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+        });
+
+        Schema::create('contents', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('bodies');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+        Schema::create('reactions', function (Blueprint $table) {
+            $table->id();
+            $table->string('comment');
+            $table->boolean('like')->default(false);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('content_id');
+            $table->foreign('content_id')->references('id')->on('contents');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -42,8 +69,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('contents');
+        Schema::dropIfExists('catagories');
+        Schema::dropIfExists('reactions');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        
     }
 };
