@@ -1,6 +1,5 @@
-<x-layout>
-    {{-- <x-slot:title>{{$title}}</x-slot:title> --}}
-
+@extends('layouts.app')
+@section('content')
     <div class="container mx-auto py-8">
         <h1 class="text-2xl font-bold mb-4">Kategori</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -14,4 +13,4 @@
         </div>
     </div>
 
-</x-layout>
+@endsection

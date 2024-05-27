@@ -65,12 +65,16 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/'); // Ubah ke rute utama Anda
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            }
+
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        ]);
     }
     public function logout(Request $request)
     {

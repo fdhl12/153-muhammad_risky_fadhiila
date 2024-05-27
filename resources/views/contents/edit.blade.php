@@ -1,5 +1,5 @@
-<x-layout>
-
+@extends('layouts.app')
+@section('content')
     <div class="mt-10 p-5 sm:mx-auto sm:w-full sm:max-w-100 rounded-sm border-orange-500 shadow-lg ">
 
         <form class="space-y-6" method="POST" action="{{ route('contents.update', $content->id) }}" enctype="multipart/form-data">
@@ -29,8 +29,4 @@
               </div>
             </form>
     </div>
-    
-
-
-</x-layout>
-    
+@endsection

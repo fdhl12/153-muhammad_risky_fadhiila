@@ -1,4 +1,25 @@
-<x-layout>
-  <h3 class="text-3xl font-bold tracking-tighter text-gray-900">Ini HomePage</h3>
+@extends('layouts.app')
 
-</x-layout>
+    
+    @section('content')
+    <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Dashboard') }}</div>
+                
+                <div class="card-body">
+                    @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                    @endif
+                    
+                    {{ __('You are logged in!') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+

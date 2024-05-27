@@ -3,31 +3,48 @@
 namespace App\Models;
 
 use App\UserRole;
+use Illuminate\Http\Request;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasFactory;
+    use Notifiable, HasFactory, HasApiTokens;
 
     protected $fillable = [
-        'username', 'name', 'email', 'password', 'photo_profile', 'role'
+        'username', 
+        'name',
+        'email', 
+        'password', 
+        'photo_profile', 
+        'role'
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 
+        'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-    protected function role(): Attribute
+    /**
+     * Method untuk memeriksa apakah pengguna adalah admin.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
     {
-        return Attribute::make(
-            get: fn ($value) => UserRole::from($value),
-            set: fn (UserRole $value) => $value->value,
-        );
+        return $this->role === 'admin';
     }
+    protected function authenticated(Request $request, $user)
+{
+    if ($user->isAdmin()) { // Jika user memiliki peran admin
+        return redirect()->route('admin.dashboard');
+    }
+
+    return redirect()->intended($this->redirectTo);
+}
+
 }
