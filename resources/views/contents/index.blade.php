@@ -15,10 +15,10 @@
                     @endif
 
                     <div class="p-6">
-                        <h2 class="text-xl font-bold mb-2">{{ $content->title }}</h2>
-                        <p class="text-gray-700 mb-4">{!! $content->description !!}</p>
+                        <a href="{{ route('contents.show', $content->id) }}" class="text-indigo-600 hover:text-indigo-800 mt-4 inline-block">
+                            <h2 class="text-xl font-bold text-gray-900 mb-2">{{ $content->title }}</h2> </a>
+                        <p class="text-gray-700 mb-4">{!! Str::limit($content->description) !!}</p>
                         <div class="flex justify-between items-center">
-                            <a href="{{ route('contents.show', $content->id) }}" class="text-indigo-600 hover:text-indigo-800 mt-4 inline-block">Read more</a>
                             <span class="text-gray-600">{{ $content->user->name }}</span>
                         </div>
                     </div>

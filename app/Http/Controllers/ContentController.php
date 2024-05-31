@@ -22,9 +22,9 @@ class ContentController extends Controller
                     $q->where('username', 'LIKE', "%{$query}%")
                         ->orWhere('name', 'LIKE', "%{$query}%");
                 })
-                ->paginate(10);
+                ->orderBy('created_at', 'desc')->paginate(10);
         } else {
-            $contents = Content::with('user')->paginate(12);
+            $contents = Content::with('user')->orderBy('created_at', 'desc')->paginate(12);
         }
 
         return view('contents.index', compact('contents', 'query'));
@@ -37,7 +37,7 @@ class ContentController extends Controller
         if ($query) {
             $contents = Content::where('title', 'LIKE', "%{$query}%")->get();
         } else {
-            $contents = Content::with('user', 'category')->paginate(10);
+            $contents = Content::with('user', 'category')->orderBy('created_at', 'desc')->paginate(10);
         }
 
 
@@ -62,7 +62,7 @@ class ContentController extends Controller
                 })
                 ->paginate(10);
         } else {
-            $contents = Content::where('user_id', $userId)->paginate(10);
+            $contents = Content::where('user_id', $userId)->orderBy('created_at', 'desc')->paginate(10);
         }
 
         Log::info('Content fetched successfully');
@@ -86,7 +86,7 @@ class ContentController extends Controller
     public function comment(Request $request, Content $content)
     {
         $request->validate([
-            'comment' => 'required|string|max:255',
+            'comment' => 'nullable|string|max:255',
         ]);
 
         Reaction::create([
@@ -119,7 +119,7 @@ class ContentController extends Controller
         // Simpan gambar jika ada
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('content_images', 'public');
+            $imagePath = $request->file('image')->store('category_images', 'public');
         }
 
         Content::create([

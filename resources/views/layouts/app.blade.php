@@ -21,6 +21,9 @@
                 @yield('content')
             </div>
         </main>
+
+
+        @include('layouts.footer')
         <script>
           CKEDITOR.replace('description');
       </script>

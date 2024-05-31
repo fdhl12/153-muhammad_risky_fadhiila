@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
@@ -73,6 +74,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile.show');
     // Tampilkan halaman pengaturan pengguna
     Route::get('/settings/{username}', [UserController::class, 'settings'])->name('settings');
 

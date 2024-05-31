@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container pt-16 mx-auto px-4">
+<div class="container h-screen pt-16 mx-auto px-4">
     <div class="text-center text-5xl">{{ __('Login') }}</div>
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form class="space-y-6" action="{{ url('/login') }}" method="POST">

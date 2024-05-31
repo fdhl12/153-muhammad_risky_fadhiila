@@ -19,5 +19,8 @@ class Category extends Model
     }
 
     // Jika Anda memiliki kolom yang ingin diisi secara massal, tambahkan ke fillable array
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'image'
+    ];
 }

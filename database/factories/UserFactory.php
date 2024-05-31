@@ -32,7 +32,6 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
-            'photo_profile' => $this->faker->imageUrl(100, 100, 'people', true),
             'role' => UserRole::User,
         ];
     }
@@ -43,5 +42,4 @@ class UserFactory extends Factory
             'role' => UserRole::Admin,
         ]);
     }
-    
 }

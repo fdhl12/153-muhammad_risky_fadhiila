@@ -7,7 +7,7 @@
             <div class="" >
                 <label for="title" class="block text-xl font-medium leading-6 text-gray-900">Title</label>
                 <div class="">
-                    <input type="title" class="bg-gray-100" name="title" id="title" required>
+                    <input type="title" class="block w-full px-3 text-xl text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="title" id="title" required>
                 </div>
             </div>
             <div class="">

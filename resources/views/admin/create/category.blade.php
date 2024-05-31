@@ -31,7 +31,7 @@
         </div>
     @endif
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="{{ route('categories.store') }}" method="POST">
+        <form class="space-y-6" action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div>
                 <label for="name" class="block text-sm font-medium leading-6 text-gray-900">{{ __('Name') }}</label>
@@ -44,6 +44,9 @@
                         </span>
                     @enderror
             </div>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image" >Upload Photo</label>
+            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" type="file" name="image" id="image" accept="image/*">
+            
            
             
 

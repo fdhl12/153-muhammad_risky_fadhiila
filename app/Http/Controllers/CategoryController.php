@@ -54,11 +54,18 @@ class CategoryController extends Controller
     {
         // Validasi data masukan
         $request->validate([
-            'name' => 'required|string|max:55'
+            'name' => 'required|string|max:55',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('content_images', 'public');
+        }
+
         Category::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'image' => $imagePath
         ]);
 
         return redirect()->route('categories.index')->with('success', 'Content created successfully.');

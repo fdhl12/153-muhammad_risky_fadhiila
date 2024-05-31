@@ -21,7 +21,7 @@ class UserController extends Controller
                 ->orWhere('username', 'LIKE', "%{$query}%")
                 ->paginate(10);
         } else {
-            $users = User::paginate(10);
+            $users = User::orderBy('created_at', 'desc')->paginate(10);
         }
 
         return view('admin.users', compact('users', 'query'));

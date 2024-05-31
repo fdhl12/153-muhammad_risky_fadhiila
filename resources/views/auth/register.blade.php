@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container pt-16 mx-auto px-4">
+<div class="container h-screen pt-16 mx-auto px-4">
     <div class="text-center text-5xl">{{ __('Register') }}</div>
         
 

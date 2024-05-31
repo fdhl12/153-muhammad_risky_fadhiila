@@ -19,7 +19,7 @@
                 <img src="https://via.placeholder.com/400x200" alt="Story Image" class="w-full h-48 object-cover">
                 <div class="p-6">
                     <h2 class="text-xl font-bold mb-2">{{ $content->title }}</h2>
-                    <p class="text-gray-700 mb-4">{!! $content->description !!}</p>
+                    <p class="text-gray-700 mb-4">{!! Str::limit($content->description) !!}</p>
                     <div class="flex justify-between items-center">
                         <a href="{{ route('contents.show', $content->id) }}" class="text-indigo-600 hover:text-indigo-900">Read More</a>
                         <span class="text-gray-600">{{ $content->user->name }}</span>

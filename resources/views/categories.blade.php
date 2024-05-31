@@ -8,7 +8,7 @@
             @foreach ($categories as $category)
                 <!-- Category Card -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="{{ asset('images/' . $category->image) }}" alt="{{ $category->name }}" class="w-full h-48 object-cover">
+                    <img src="{{ asset('storage/' .  $category->image) }}" alt="{{ $category->name }}" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h2 class="text-xl font-bold mb-2">{{ $category->name }}</h2>
                         <div class="flex justify-between items-center">

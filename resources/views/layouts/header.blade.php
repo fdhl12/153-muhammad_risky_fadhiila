@@ -142,7 +142,7 @@
           style="display: none;"
           class="absolute left-0 mt-2 w-40 rounded-md bg-white shadow-md"
       >
-      <x-nav-link href="#" class="block px-4 py-2 text-sm text-gray-700 hover:text-orange-500" role="menuitem" tabindex="-1" id="user-menu-item-0">My Profile</x-nav-link>
+      <x-nav-link href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:text-orange-500" role="menuitem" tabindex="-1" id="user-menu-item-0">My Profile</x-nav-link>
 
       <x-nav-link href="{{ route('settings', ['username' => Auth::user()->username]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:text-orange-500" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</x-nav-link>
 
@@ -161,10 +161,81 @@
     <div x-show="isOpen" class="sm:hidden" id="mobile-menu">
         
       <div class=" space-y-1 px-2 pb-3 pt-2">
+        @if ($authUser)
+        <div class="flex justify-center">
+          <div
+              x-data="{
+                  open: false,
+                  toggle() {
+                      if (this.open) {
+                          return this.close()
+                      }
+        
+                      this.$refs.button.focus()
+        
+                      this.open = true
+                  },
+                  close(focusAfter) {
+                      if (! this.open) return
+        
+                      this.open = false
+        
+                      focusAfter && focusAfter.focus()
+                  }
+              }"
+              x-on:keydown.escape.prevent.stop="close($refs.button)"
+              x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+              x-id="['dropdown-button']"
+              class="relative w-full"
+          >
+              <!-- Button -->
+              <button
+                  x-ref="button"
+                  x-on:click="toggle()"
+                  :aria-expanded="open"
+                  :aria-controls="$id('dropdown-button')"
+                  type="button"
+                  class="flex items-center gap-2 bg-white px-5 py-2.5 w-full justify-center"
+              >
+              <img class="h-8 w-8 rounded-full" src="{{ $authUser->photo_profile ? asset('storage/' . $authUser->photo_profile) : 'https://randomuser.me/api/portraits/women/21.jpg' }}" alt="">
+        
+              {{ $authUser->name }}
+                  <!-- Heroicon: chevron-down -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+              </button>
+        
+              <!-- Panel -->
+              <div
+                  x-ref="panel"
+                  x-show="open"
+                  x-transition.origin.top.left
+                  x-on:click.outside="close($refs.button)"
+                  :id="$id('dropdown-button')"
+                  style="display: none;"
+                  class="absolute left-0 mt-2 w-full rounded-md bg-white shadow-md"
+              >
+              <x-nav-link href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" 
+                class="flex items-center gap-2 w-full first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:bg-gray-50 disabled:text-gray-500" role="menuitem" tabindex="-1" id="user-menu-item-0">
+                My Profile
+              </x-nav-link>
+        
+              <x-nav-link href="{{ route('settings', ['username' => Auth::user()->username]) }}" 
+                class="flex items-center gap-2 w-full first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:bg-gray-50 disabled:text-gray-500" role="menuitem" tabindex="-1" id="user-menu-item-1">
+                Settings
+              </x-nav-link>
+        
+              </div>
+              @endif
+        
             @auth
                 @if(Auth::user()->role === 'admin')
                     <x-nav-link href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-xl text-gray-700 hover:text-orange-500">Admin Dashboard</x-nav-link>
-
+                    <x-nav-link href="/logout" class="block px-4 py-2 text-xl text-gray-700 hover:text-orange-500" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" role="menuitem" tabindex="-1" id="user-menu-item-2">Logout</x-nav-link>
+  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
                 
             @else
             
@@ -172,87 +243,14 @@
                   <x-nav-link href="/categories" class="block px-4 py-2 text-xl text-gray-700 hover:text-orange-500">Category</x-nav-link>
                   <x-nav-link href="{{ route('contents.mystories') }}" class="block px-4 py-2 text-xl text-gray-700 hover:text-orange-500">My Story</x-nav-link>
                   <x-nav-link href="/write" class="block px-4 py-2 text-xl text-gray-700 hover:text-orange-500">Write</x-nav-link>
+                  <x-nav-link href="/logout" class="block px-4 py-2 text-xl text-gray-700 hover:text-orange-500" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" role="menuitem" tabindex="-1" id="user-menu-item-2">Logout</x-nav-link>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
               @endif
             @endauth
-            @if ($authUser)
-            <x-nav-link href="/logout" class="block px-4 py-2 text-xl text-gray-700 hover:text-orange-500" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" role="menuitem" tabindex="-1" id="user-menu-item-2">Logout</x-nav-link>
-  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    @csrf
-</form>
-
-
-            
-        </div>
-            
-<div class="flex justify-center">
-  <div
-      x-data="{
-          open: false,
-          toggle() {
-              if (this.open) {
-                  return this.close()
-              }
-
-              this.$refs.button.focus()
-
-              this.open = true
-          },
-          close(focusAfter) {
-              if (! this.open) return
-
-              this.open = false
-
-              focusAfter && focusAfter.focus()
-          }
-      }"
-      x-on:keydown.escape.prevent.stop="close($refs.button)"
-      x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
-      x-id="['dropdown-button']"
-      class="relative"
-  >
-      <!-- Button -->
-      <button
-          x-ref="button"
-          x-on:click="toggle()"
-          :aria-expanded="open"
-          :aria-controls="$id('dropdown-button')"
-          type="button"
-          class="flex items-center gap-2 bg-white px-5 py-2.5"
-      >
-      <img class="h-8 w-8 rounded-full" src="{{ $authUser->photo_profile ? asset('storage/' . $authUser->photo_profile) : 'https://randomuser.me/api/portraits/women/21.jpg' }}" alt="">
-
-      {{ $authUser->name }}
-          <!-- Heroicon: chevron-down -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-      </button>
-
-      <!-- Panel -->
-      <div
-          x-ref="panel"
-          x-show="open"
-          x-transition.origin.top.left
-          x-on:click.outside="close($refs.button)"
-          :id="$id('dropdown-button')"
-          style="display: none;"
-          class="absolute left-0 mt-2 w-40 rounded-md bg-white shadow-md"
-      >
-          <a href="#" class="flex items-center gap-2 w-full first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:bg-gray-50 disabled:text-gray-500">
-              New Task
-          </a>
-
-          <a href="#" class="flex items-center gap-2 w-full first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:bg-gray-50 disabled:text-gray-500">
-              Edit Task
-          </a>
-
-          <a href="#" class="flex items-center gap-2 w-full first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:bg-gray-50 disabled:text-gray-500">
-              <span class="text-red-600">Delete Task</span>
-          </a>
-      </div>
-      @endif
-
-  </div>
+          </div>
+          
   <div class="relative ml-3">
 
     @if (Auth::check())

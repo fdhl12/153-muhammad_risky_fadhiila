@@ -14,14 +14,14 @@
                         <img src="https://via.placeholder.com/400x200" alt="Placeholder Image" class="w-full h-48 object-cover">
                     @endif
                     <div class="p-6">
-                        <h2 class="text-xl font-bold mb-2">{{ $content->title }}</h2>
-                        <p class="text-gray-700 mb-4">{!! $content->description !!}</p>
-                        <div class="flex justify-between items-center">
-                            <a href="{{ route('contents.show', $content->id) }}" class="text-indigo-600 hover:text-indigo-800 mt-4 inline-block">Read more</a>
-                            <span class="text-gray-600">{{ $content->user->name }}</span>
+                        <a href="{{ route('contents.show', $content->id) }}" class="text-indigo-600 hover:text-indigo-800 mt-4 inline-block">
+                        <h2 class="text-xl text-gray-900 font-bold mb-2">{{ Str::limit($content->title) }}</h2> </a>
+                        <p class="text-gray-700 mb-4">{!! Str::limit($content->description) !!}</p>
+                        <div class="flex mt-3 justify-between items-center">
+                            
                             @auth
                             @if(Auth::user()->role === 'user' && Auth::id() === $content->user_id)
-                            <a href="{{ route('contents.edit', $content->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            <a href="{{ route('contents.edit', $content->id) }}" class="rounded-lg bg-orange-400 px-4 py-1  text-white hover:text-gray-200">Edit</a>
                                 <form action="{{ route('contents.destroy', $content->id) }}" method="POST" class="inline-block">
                                     @csrf
                                     @method('DELETE')

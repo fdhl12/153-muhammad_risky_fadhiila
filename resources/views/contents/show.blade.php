@@ -25,14 +25,17 @@
                         @if($content->user->photo_profile)
                         <img src="{{ asset('storage/' . $content->user->photo_profile) }}" alt="User Profile Image" class="w-10 h-10 rounded-full mr-3">
                         @else
-                        <img src="https://via.placeholder.com/40" alt="Placeholder Profile Image" class="w-10 h-10 rounded-full mr-3">
+                        <img src="https://randomuser.me/api/portraits/women/21.jpg" alt="Placeholder Profile Image" class="w-10 h-10 rounded-full mr-3">
                         @endif
                         <div>
+                    <a href="{{ route('profile.show', ['username' => $content->user->username]) }}">
                             <h2 class="text-lg font-bold">{{ $content->user->name }}</h2>
+                        </a>
                             <p class="text-sm">{{ $content->created_at->format('M d, Y') }}</p>
                         </div>
                     </div>
-                    <p class="text-sm mt-2">{{ $content->category->name }}</p>
+                        <p class="text-sm mt-2">{{ $content->category->name }}</p>
+                    
                     <div class="">
                         <p class="text-sm mt-1 mr-2">{{ $content->views }} views</p>
                     @auth
@@ -52,7 +55,7 @@
                 <h1 class="text-2xl font-bold mb-4">{{ $content->title }}</h1>
                 <p class="text-gray-700 mb-6">{!! $content->description !!}</p>
         
-                <div class="flex">
+                <div class="flex mt-3">
                     <!-- Modal toggle -->
                     <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                         Comment
