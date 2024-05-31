@@ -7,13 +7,13 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Kestory') }}</title>
       @vite('resources/css/app.css')
       <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
       <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.10/dist/cdn.min.js"></script>
     </head>
     <body class="h-full">
-      <x-navbar></x-navbar>
+      @include('layouts.header')
       {{-- <x-header>{{$title}}</x-header> --}}
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -24,5 +24,7 @@
         <script>
           CKEDITOR.replace('description');
       </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+
     </body>
     </html>

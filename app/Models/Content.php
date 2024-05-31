@@ -13,7 +13,8 @@ class Content extends Model
         'title',
         'description',
         'user_id',
-        'category_id'
+        'category_id',
+        'image'
     ];
 
     public function category()
@@ -24,5 +25,9 @@ class Content extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function reactions()
+    {
+        return $this->hasMany(Reaction::class);
     }
 }

@@ -11,15 +11,12 @@
         </x-nav-link>
     </div>
     
+    <div class="flex items-center justify-center">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach ($contents as $content)
             <!-- Content Card -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                @if($content->image)
-                        <img src="{{ asset('storage/' . $content->image) }}" alt="Content Image" class="w-full h-48 object-cover">
-                    @else
-                        <img src="https://via.placeholder.com/400x200" alt="Placeholder Image" class="w-full h-48 object-cover">
-                    @endif
+                <img src="https://via.placeholder.com/400x200" alt="Story Image" class="w-full h-48 object-cover">
                 <div class="p-6">
                     <h2 class="text-xl font-bold mb-2">{{ $content->title }}</h2>
                     <p class="text-gray-700 mb-4">{!! $content->description !!}</p>
@@ -31,6 +28,22 @@
             </div>
             @endforeach
         </div>
-            
+            {{-- @foreach ($contents as $content)
+            <div class=" bg-white rounded-lg shadow-md p-6">
+                
+                    
+                        <div class="text-gray-900">
+                           <h1 class="text-2xl font-bold mb-4"> {{ $content->title }} </h1>
+                        </div>
+                        <div class="text-sm leading-5 text-gray-900 mb-4">{{ $content->category->name }}</div>
+                    
+                        <div class="text-sm leading-5 text-gray-900"><p class="text-gray-700 mb-4">{!! $content->description !!}</p></div>
+                    
+                        <div class="text-sm leading-5 text-gray-900 mb-4">Author : {{ $content->user->name }}</div>
+                    
+                
+            </div>
+            @endforeach --}}
+    </div>
 </div>
 @endsection

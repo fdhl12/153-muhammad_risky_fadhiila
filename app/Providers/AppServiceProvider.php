@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
@@ -35,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
                 $authUser->name = Str::upper($authUser->name);
             }
             $view->with('authUser', $authUser);
+        });
+        Blade::directive('censor', function ($expression) {
+            return "<?php echo \Illuminate\Support\Str::mask($expression, '*', 0, mb_strlen($expression)); ?>";
         });
     }
 

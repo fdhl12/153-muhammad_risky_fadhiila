@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('image');
+            $table->timestamps();
         });
 
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->integer('views')->default(0);
+            $table->string('image');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('category_id');
@@ -35,6 +39,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('content_id');
             $table->foreign('content_id')->references('id')->on('contents');
+            $table->timestamps();
         });
     }
 

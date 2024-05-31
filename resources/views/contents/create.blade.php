@@ -7,7 +7,7 @@
             <div class="" >
                 <label for="title" class="block text-xl font-medium leading-6 text-gray-900">Title</label>
                 <div class="">
-                    <input type="title" name="title" id="title" required>
+                    <input type="title" class="bg-gray-100" name="title" id="title" required>
                 </div>
             </div>
             <div class="">
@@ -19,6 +19,8 @@
                     @endforeach
                 </select>
             </div>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image" >Upload Photo</label>
+            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" type="file" name="image" id="image" accept="image/*">
             <div class="">
                 <label for="description" class="block text-xl font-medium leading-6 text-gray-900">Description</label>
                 <textarea name="description" id="description" required></textarea>
@@ -29,8 +31,4 @@
             </form>
     </div>
     @endsection
-    
-
-
-</x-layout>
     
